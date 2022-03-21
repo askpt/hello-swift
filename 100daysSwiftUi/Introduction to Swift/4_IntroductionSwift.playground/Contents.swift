@@ -109,3 +109,87 @@ func printTimesTable(for number: Int) {
     }
 }
 printTimesTable(for: 5)
+
+// default values
+func printTimesTables(for number: Int, end: Int = 12) {
+    for i in 1...end {
+        print("\(i) x \(number) is \(i * number)")
+    }
+}
+
+printTimesTables(for: 5, end: 20)
+printTimesTables(for: 8)
+
+var characters = ["Lana", "Pam", "Ray", "Sterling"]
+print(characters.count)
+characters.removeAll(keepingCapacity: true)
+print(characters.count)
+
+// handle errors
+enum PasswordError: Error {
+    case short, obvious
+}
+
+func checkPassword(_ password: String) throws -> String {
+    if password.count < 5 { throw PasswordError.short }
+    if password == "12345" { throw PasswordError.obvious }
+    
+    if password.count < 8 {
+        return "Ok"
+    } else if password.count < 10 {
+        return "Good"
+    } else {
+        return "Excellent"
+    }
+}
+
+do {
+    let string = "12345"
+    let result = try checkPassword(string)
+    print("Password rating: \(result)")
+} catch PasswordError.short {
+    print("Please use a longer password.")
+} catch PasswordError.obvious {
+    print("I have the same combination on my luggage!")
+} catch {
+    print("There was an error: \(error.localizedDescription)")
+}
+
+// Checkpoint 4
+enum squareRootErrors : Error {
+    case tooLow, tooHigh, noRoot
+}
+
+func squareRoot(of num: Int) throws -> Int{
+    if num < 0 { throw squareRootErrors.tooLow }
+    if num > 1000 { throw squareRootErrors.tooHigh }
+    
+    for i in 1...100 {
+        let root = i * i
+        if root == num {
+            return i
+        }
+    }
+    
+    throw squareRootErrors.noRoot
+}
+
+func safeSquareRoot(_ num: Int) {
+    do {
+        let result = try squareRoot(of: num)
+        print("Result \(result)")
+    } catch squareRootErrors.noRoot {
+        print("No root was found")
+    } catch squareRootErrors.tooLow {
+        print("Number is too low")
+    } catch squareRootErrors.tooHigh {
+        print("Number is too high")
+    } catch {
+        print("Something wrong happened")
+    }
+}
+
+safeSquareRoot(-1)
+safeSquareRoot(1_000_000)
+safeSquareRoot(2)
+safeSquareRoot(25)

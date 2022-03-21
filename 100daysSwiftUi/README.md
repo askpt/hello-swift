@@ -7,4 +7,4 @@
 
 ## Status
 
-Currently: 7/100
+Currently: 8/100
