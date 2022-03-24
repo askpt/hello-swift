@@ -113,3 +113,91 @@ struct Player {
 
 let player = Player(name: "Megan R")
 print(player.number)
+
+// Limit access
+struct BankAccount {
+    private(set) var funds = 0
+    
+    mutating func deposit(amount: Int) {
+        funds += amount
+    }
+    
+    mutating func withdraw(amount: Int) -> Bool {
+        if funds > amount {
+            funds -= amount
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+var account = BankAccount()
+account.deposit(amount: 100)
+
+let success = account.withdraw(amount: 200)
+if success {
+    print("Withdrew money successfully")
+} else {
+    print("Failed to get the money")
+}
+
+// Static bits
+struct School {
+    static var studentCount = 0
+    
+    static func add(student: String) {
+        print("\(student) joined the school.")
+        studentCount += 1
+    }
+}
+
+School.add(student: "Taylor Swift")
+print(School.studentCount)
+
+struct AppData {
+    static let version = "1.3 beta 2"
+    static let saveFilename = "settings.json"
+    static let homeURL = "www.sapo.pt"
+}
+
+struct Employee2 {
+    let password: String
+    let username: String
+
+    static let example = Employee2(password: "123", username: "Aaa")
+}
+
+// Checkpoint 6
+struct Car {
+    let model: String
+    let seats: Int
+    private(set) var currentGear: Int = 0
+    
+    init(model: String, seats: Int) {
+        self.model = model
+        self.seats = seats
+    }
+    
+    mutating func gearUp() {
+        if currentGear >= 10 {
+            print("Not allowed")
+        } else {
+            currentGear += 1
+        }
+    }
+    
+    mutating func gearDown() {
+        if currentGear <= 0 {
+            print("Not allowed")
+        } else {
+            currentGear -= 1
+        }
+    }
+}
+
+var car = Car(model: "Tesla", seats: 5)
+car.gearDown()
+car.gearUp()
+car.gearUp()
+car.gearDown()
