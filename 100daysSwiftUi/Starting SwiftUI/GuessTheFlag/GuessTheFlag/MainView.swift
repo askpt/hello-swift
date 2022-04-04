@@ -10,8 +10,13 @@ import SwiftUI
 struct MainView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
+    @State private var showingGameover = false
+    
     @State var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State var correctAnswer = Int.random(in: 0...2)
+    @State var score = 0
+    @State var attempts = 0
+    
     
     var body: some View {
         ZStack {
@@ -38,7 +43,7 @@ struct MainView: View {
                     
                     ForEach(0..<3) { number in
                         Button {
-                            flagTapped(number)
+                            flagTapped(number, flag: countries[number])
                         } label: {
                             Image(countries[number])
                                 .renderingMode(.original)
@@ -55,7 +60,7 @@ struct MainView: View {
                 Spacer()
                 Spacer()
                 
-                Text("Score: ???")
+                Text("Score: \(score)")
                     .foregroundColor(.white)
                     .font(.title.bold())
                 Spacer()
@@ -64,15 +69,22 @@ struct MainView: View {
         .alert(scoreTitle, isPresented: $showingScore) {
             Button("Continue", action: askQuestion)
         } message: {
-            Text("Your score is ???")
+            Text("Your score is \(score)")
+        }
+        .alert("Game is over", isPresented: $showingGameover) {
+            Button("Restart", action: reset)
+        } message: {
+            Text("Your score is \(score)")
         }
     }
     
-    func flagTapped(_ number: Int) {
+    func flagTapped(_ number: Int, flag flagTapped: String) {
         if number == correctAnswer {
             scoreTitle = "Correct"
+            score += 1
         } else {
-            scoreTitle = "Wrong"
+            scoreTitle = "Wrong! That's the flag of \(flagTapped)"
+            score -= 1
         }
         
         showingScore = true
@@ -81,6 +93,16 @@ struct MainView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 1...2)
+        attempts += 1
+        
+        if (attempts >= 8) {
+            showingGameover = true
+        }
+    }
+    
+    func reset() {
+        attempts = 0
+        score = 0
     }
 }
 
