@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var score = 0
     
     @State private var errorTitle = ""
     @State private var errorMessage = ""
@@ -34,20 +35,28 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle(rootWord)
+            .navigationTitle("\(rootWord) - \(score)")
             .onSubmit(addNewWord)
             .onAppear(perform: startGame)
             .alert(errorTitle, isPresented: $showingError) {
                 Button("Ok", role: .cancel) { }
             } message: {
                 Text(errorMessage)
+            }.toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Restart", action: startGame)
+                }
             }
         }
     }
     
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        guard answer.count > 0 else { return }
+        
+        guard isValidWord(word: answer) else {
+            wordError(title: "Word too short or is the start word", message: "Be more original!")
+            return
+        }
         
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original!")
@@ -68,6 +77,7 @@ struct ContentView: View {
             usedWords.insert(answer, at: 0)
         }
                 
+        addScore(wordCount: answer.count)
         newWord = ""
     }
     
@@ -76,6 +86,7 @@ struct ContentView: View {
             if let startWords = try? String(contentsOf: startWordsURL) {
                 let allWords = startWords.components(separatedBy: "\n")
                 rootWord = allWords.randomElement() ?? "silkworm"
+                score = 0
                 return
             }
         }
@@ -113,6 +124,21 @@ struct ContentView: View {
         errorTitle = title
         errorMessage = message
         showingError = true
+    }
+    
+    func isValidWord(word: String) -> Bool {
+        if word.count < 3 {
+            return false
+        }
+        if word == rootWord {
+            return false
+        }
+        
+        return true
+    }
+    
+    func addScore(wordCount: Int) {
+        score += wordCount
     }
 }
 
