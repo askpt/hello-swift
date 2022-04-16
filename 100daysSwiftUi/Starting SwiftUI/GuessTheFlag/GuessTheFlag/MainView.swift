@@ -28,6 +28,8 @@ struct MainView: View {
     @State var score = 0
     @State var attempts = 0
     
+    @State var animationAmount = 0.0
+    @State var tappedFlag = ""
     
     var body: some View {
         ZStack {
@@ -55,9 +57,17 @@ struct MainView: View {
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number, flag: countries[number])
+                            withAnimation(.interpolatingSpring(stiffness: 10, damping: 100)) {
+                                animationAmount += 360
+                                tappedFlag = countries[number]
+                            }
                         } label: {
                             FlagImage(country: countries[number])
                         }
+                        .opacity((countries[number] == tappedFlag) ? 1 : ("" == tappedFlag) ? 1 : 0.25)
+                        .scaleEffect((countries[number] == tappedFlag) ? 1 : ("" == tappedFlag) ? 1 : 0.25)
+                        .animation(.default, value: tappedFlag)
+                        .rotation3DEffect(.degrees((countries[number] == tappedFlag) ? animationAmount : 0.0), axis: (x: 0, y: 1, z: 0))
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -102,6 +112,7 @@ struct MainView: View {
         countries.shuffle()
         correctAnswer = Int.random(in: 1...2)
         attempts += 1
+        tappedFlag = ""
         
         if (attempts >= 8) {
             showingGameover = true
