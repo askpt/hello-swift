@@ -7,25 +7,52 @@
 
 import SwiftUI
 
+struct ExpensesTypeView: View {
+    let type: String
+    let expenses: Expenses
+    let removeItemsAction: Optional<(IndexSet) -> Void>
+    
+    var body: some View {
+        VStack {
+            Text("Personal")
+            List {
+                ForEach(expenses.items) { item in
+                    if item.type == type {
+                        ExpenseView(expense: item)
+                    }
+                }
+                .onDelete(perform: removeItemsAction)
+            }
+        }
+    }
+}
+
+struct ExpenseView: View {
+    let expense: ExpenseItem
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(expense.name)
+                    .font(.headline)
+                Text(expense.type)
+            }
+            Spacer()
+            Text(expense.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                .foregroundColor(expense.amount < 10 ? .green : (expense.amount < 100 ? .yellow : .red))
+        }
+    }
+}
+
 struct ContentView: View {
     @StateObject var expenses = Expenses()
     @State private var showingAddExpense = false
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(expenses.items) { item in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .font(.headline)
-                            Text(item.type)
-                        }
-                        Spacer()
-                        Text(item.amount, format: .currency(code: "USD"))
-                    }
-                }
-                .onDelete(perform: removeItems)
+            VStack {
+                ExpensesTypeView(type: "Personal", expenses: expenses, removeItemsAction: removeItems)
+                ExpensesTypeView(type: "Business", expenses: expenses, removeItemsAction: removeItems)
             }
             .navigationTitle("iExpense")
             .toolbar {
