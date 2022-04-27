@@ -78,8 +78,8 @@ struct ColorCyclingCircle: View {
                     .inset(by: Double(value))
                     .strokeBorder(
                         LinearGradient(gradient: Gradient(colors: [
-                        color(for: value, brightness: 1),
-                        color(for: value, brightness: 0.5)]), startPoint: .top, endPoint: .bottom),
+                            color(for: value, brightness: 1),
+                            color(for: value, brightness: 0.5)]), startPoint: .top, endPoint: .bottom),
                         lineWidth: 2)
             }
         }
@@ -97,11 +97,74 @@ struct ColorCyclingCircle: View {
     }
 }
 
+struct Trapezoid: Shape {
+    var insetAmount: Double
+    
+    var animatableData: Double {
+        get { insetAmount }
+        set { insetAmount = newValue }
+    }
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        path.move(to: CGPoint(x: 0, y: rect.maxY))
+        path.addLine(to: CGPoint(x: insetAmount, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX - insetAmount, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: 0, y: rect.maxY))
+        
+        return path
+    }
+}
+
+struct Checkerboard: Shape {
+    var rows: Int
+    var columns: Int
+    
+    var animatableData: AnimatablePair<Double, Double> {
+        get {
+            AnimatablePair(Double(rows), Double(columns))
+        }
+        set {
+            rows = Int(newValue.first)
+            columns = Int(newValue.second)
+        }
+    }
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        let rowSize = rect.height / Double(rows)
+        let columnSize = rect.width / Double(columns)
+        
+        for row in 0..<rows {
+            for column in 0..<columns {
+                if (row + column).isMultiple(of: 2) {
+                    let startX = columnSize * Double(column)
+                    let startY = rowSize * Double(row)
+                    
+                    let rect = CGRect(x: startX, y: startY, width: columnSize, height: rowSize)
+                    path.addRect(rect)
+                }
+            }
+        }
+        
+        return path
+    }
+}
+
 struct ExamplesView: View {
     @State private var petalOffset = -20.0
     @State private var petalWidth = 100.0
     
     @State private var colorCycle = 0.0
+    @State private var amount = 0.0
+    
+    @State private var insetAmount = 50.0
+    
+    @State private var rows = 4
+    @State private var columns = 4
     
     var body: some View {
         // Example 1
@@ -170,22 +233,102 @@ struct ExamplesView: View {
         //        }
         
         // Example 9
-//        Text("Hello world!")
-//            .frame(width: 300, height: 300)
-//            .border(ImagePaint(image: Image("Example"), sourceRect: CGRect(x: 0, y: 0.4, width: 1, height: 0.2), scale: 0.1), width: 50)
+        //        Text("Hello world!")
+        //            .frame(width: 300, height: 300)
+        //            .border(ImagePaint(image: Image("Example"), sourceRect: CGRect(x: 0, y: 0.4, width: 1, height: 0.2), scale: 0.1), width: 50)
         
         // Example 10
-//        Capsule()
-//            .strokeBorder(ImagePaint(image: Image("Example"), sourceRect: CGRect(x: 0, y: 0.4, width: 1, height: 0.5), scale: 0.3), lineWidth: 20)
-//            .frame(width: 300, height: 200)
+        //        Capsule()
+        //            .strokeBorder(ImagePaint(image: Image("Example"), sourceRect: CGRect(x: 0, y: 0.4, width: 1, height: 0.5), scale: 0.3), lineWidth: 20)
+        //            .frame(width: 300, height: 200)
         
         // Example 11
-        VStack {
-            ColorCyclingCircle(amount: colorCycle)
-                .frame(width: 300, height: 300)
-            
-            Slider(value: $colorCycle)
-        }
+        //        VStack {
+        //            ColorCyclingCircle(amount: colorCycle)
+        //                .frame(width: 300, height: 300)
+        //
+        //            Slider(value: $colorCycle)
+        //        }
+        
+        // Example 12
+        //        ZStack {
+        //            Image("Example")
+        //
+        //            Rectangle()
+        //                .fill(.red)
+        //                .blendMode(.multiply)
+        //        }
+        
+        // Example 13
+        //        ZStack {
+        //            Image("Example")
+        //                .colorMultiply(.red)
+        //        }
+        
+        // Example 14
+        //        VStack {
+        //            ZStack {
+        //                Circle()
+        //                    .fill(Color(red: 1, green: 0, blue: 0))
+        //                    .frame(width: 200 * amount)
+        //                    .offset(x: -50, y: -80)
+        //                    .blendMode(.screen)
+        //
+        //                Circle()
+        //                    .fill(Color(red: 0, green: 1, blue: 0))
+        //                    .frame(width: 200 * amount)
+        //                    .offset(x: 50, y: -80)
+        //                    .blendMode(.screen)
+        //
+        //                Circle()
+        //                    .fill(Color(red: 0, green: 0, blue: 1))
+        //                    .frame(width: 200 * amount)
+        //                    .blendMode(.screen)
+        //            }
+        //            .frame(width: 300, height: 300)
+        //
+        //            Slider(value: $amount)
+        //                .padding()
+        //        }
+        //        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        //        .background(.black)
+        //        .ignoresSafeArea()
+        //    }
+        
+        // Example 15
+        //        VStack {
+        //            Image("Example")
+        //                .resizable()
+        //                .scaledToFit()
+        //                .frame(width: 200, height: 200)
+        //                .saturation(amount)
+        //                .blur(radius: (1 - amount) * 20)
+        //
+        //            Slider(value: $amount)
+        //                .padding()
+        //        }
+        //        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        //        .background(.black)
+        //        .ignoresSafeArea()
+        //    }
+        
+        // Example 16
+        //        Trapezoid(insetAmount: insetAmount)
+        //            .frame(width: 200, height: 100)
+        //            .onTapGesture {
+        //                withAnimation {
+        //                    insetAmount = Double.random(in: 10...90)
+        //                }
+        //            }
+        
+        // Example 17
+        Checkerboard(rows: rows, columns: columns)
+            .onTapGesture {
+                withAnimation(.linear(duration: 3)) {
+                    rows = 8
+                    columns = 16
+                }
+            }
     }
 }
 
