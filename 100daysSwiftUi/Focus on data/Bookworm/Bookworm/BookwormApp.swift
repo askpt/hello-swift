@@ -13,7 +13,7 @@ struct BookwormApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ExamplesView()
+            ContentView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
