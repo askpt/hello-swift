@@ -17,6 +17,7 @@
 		D939AC182824624B001E77DA /* ExamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D939AC172824624B001E77DA /* ExamplesView.swift */; };
 		D939AC1D282466C0001E77DA /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D939AC1C282466C0001E77DA /* DataController.swift */; };
 		D939AC2028246AD3001E77DA /* Bookworm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D939AC1E28246AD3001E77DA /* Bookworm.xcdatamodeld */; };
+		D98022092826BA0C005C17C9 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98022082826BA0C005C17C9 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		D939AC172824624B001E77DA /* ExamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplesView.swift; sourceTree = "<group>"; };
 		D939AC1C282466C0001E77DA /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D939AC1F28246AD3001E77DA /* Bookworm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookworm.xcdatamodel; sourceTree = "<group>"; };
+		D98022082826BA0C005C17C9 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				D939AC0B2824620F001E77DA /* ContentView.swift */,
 				D932BBF92825B9DB001EDF77 /* AddBookView.swift */,
 				D939AC0D2824621A001E77DA /* Assets.xcassets */,
+				D98022082826BA0C005C17C9 /* DetailView.swift */,
 				D939AC0F2824621A001E77DA /* Preview Content */,
 				D939AC172824624B001E77DA /* ExamplesView.swift */,
 				D939AC1C282466C0001E77DA /* DataController.swift */,
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D939AC1D282466C0001E77DA /* DataController.swift in Sources */,
+				D98022092826BA0C005C17C9 /* DetailView.swift in Sources */,
 				D932BBFA2825B9DB001EDF77 /* AddBookView.swift in Sources */,
 				D939AC182824624B001E77DA /* ExamplesView.swift in Sources */,
 				D939AC0C2824620F001E77DA /* ContentView.swift in Sources */,
