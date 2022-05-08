@@ -49,14 +49,20 @@ struct AddBookView: View {
                         newBook.rating = Int16(rating)
                         newBook.review = review
                         newBook.genre = genre
+                        newBook.date = Date.now
                         
                         try? moc.save()
                         dismiss()
                     }
                 }
+                .disabled(isValidBook())
             }
             .navigationTitle("Add Book")
         }
+    }
+    
+    func isValidBook() -> Bool {
+        return title.isBlank || author.isBlank || review.isBlank || genre.isBlank
     }
 }
 

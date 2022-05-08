@@ -18,6 +18,7 @@
 		D939AC1D282466C0001E77DA /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D939AC1C282466C0001E77DA /* DataController.swift */; };
 		D939AC2028246AD3001E77DA /* Bookworm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D939AC1E28246AD3001E77DA /* Bookworm.xcdatamodeld */; };
 		D98022092826BA0C005C17C9 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98022082826BA0C005C17C9 /* DetailView.swift */; };
+		D9CC067C282800B800B7D33A /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CC067B282800B800B7D33A /* StringExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		D939AC1C282466C0001E77DA /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D939AC1F28246AD3001E77DA /* Bookworm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bookworm.xcdatamodel; sourceTree = "<group>"; };
 		D98022082826BA0C005C17C9 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		D9CC067B282800B800B7D33A /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				D939AC172824624B001E77DA /* ExamplesView.swift */,
 				D939AC1C282466C0001E77DA /* DataController.swift */,
 				D932BBFD2825BECA001EDF77 /* EmojiRatingView.swift */,
+				D9CC067B282800B800B7D33A /* StringExtensions.swift */,
 			);
 			path = Bookworm;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 			files = (
 				D939AC1D282466C0001E77DA /* DataController.swift in Sources */,
 				D98022092826BA0C005C17C9 /* DetailView.swift in Sources */,
+				D9CC067C282800B800B7D33A /* StringExtensions.swift in Sources */,
 				D932BBFA2825B9DB001EDF77 /* AddBookView.swift in Sources */,
 				D939AC182824624B001E77DA /* ExamplesView.swift in Sources */,
 				D939AC0C2824620F001E77DA /* ContentView.swift in Sources */,
