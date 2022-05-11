@@ -18,8 +18,10 @@ struct FilteredList<T : NSManagedObject, Content: View>: View {
         }
     }
     
-    init(filterKey: String, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
-        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue))
+    init(sortDescriptors: [SortDescriptor<T>], filterKey: String, predicate: Predicate, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
+        let predicateStr = "%K \(predicate.rawValue) %@"
+        
+        _fetchRequest = FetchRequest<T>(sortDescriptors: sortDescriptors, predicate: NSPredicate(format: predicateStr, filterKey, filterValue))
         self.content = content
     }
 }
