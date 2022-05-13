@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct UserDetailView: View {
-    let selectedUser: User
-    let users: [User]
+    let selectedUser: CachedUser
+    @FetchRequest(sortDescriptors: []) var users: FetchedResults<CachedUser>
     
     var body: some View {
         VStack {
@@ -17,12 +17,12 @@ struct UserDetailView: View {
                 .padding([.top, .horizontal])
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            Text("Email: \(selectedUser.email)")
+            Text("Email: \(selectedUser.wrappedEmail)")
                 .font(.headline)
                 .padding([.horizontal])
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            Text("\(selectedUser.about)")
+            Text("\(selectedUser.wrappedAbout)")
                 .padding()
             
             
@@ -30,18 +30,18 @@ struct UserDetailView: View {
                 .font(.title3)
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)) {
-                    List(selectedUser.friends, id: \.id) { friend in
+                    List(selectedUser.friendsArray, id: \.id) { friend in
                         NavigationLink(
-                            destination: UserDetailView(selectedUser: getUser(userId: friend.id) , users: users)) {
-                                Text(friend.name)
+                            destination: UserDetailView(selectedUser: getUser(userId: friend.wrappedId))) {
+                                Text(friend.wrappedName)
                             }
                     }
                 }
         }
-        .navigationBarTitle(selectedUser.name)
+        .navigationBarTitle(selectedUser.wrappedName)
     }
     
-    private func getUser(userId: UUID) -> User {
+    private func getUser(userId: UUID) -> CachedUser {
         users.first { (User) -> Bool in
             User.id == userId
         }!
