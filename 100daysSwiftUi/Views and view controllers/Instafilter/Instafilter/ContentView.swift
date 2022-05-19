@@ -12,6 +12,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var image: Image?
     @State private var filterIntensity = 0.5
+    @State private var filterRadius = 100.0
+    @State private var filterScale = 5.0
     
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -47,6 +49,23 @@ struct ContentView: View {
                         .onChange(of: filterIntensity, perform: { _ in applyProcessing() })
                 }
                 .padding(.vertical)
+                .disabled(disablingSlider(kCIInputIntensityKey))
+                
+                HStack {
+                    Text("Radius")
+                    Slider(value: $filterRadius, in: 1...200)
+                        .onChange(of: filterRadius, perform: { _ in applyProcessing() })
+                }
+                .padding(.vertical)
+                .disabled(disablingSlider(kCIInputRadiusKey))
+                
+                HStack {
+                    Text("Scale")
+                    Slider(value: $filterScale, in: 1...10)
+                        .onChange(of: filterScale, perform: { _ in applyProcessing() })
+                }
+                .padding(.vertical)
+                .disabled(disablingSlider(kCIInputScaleKey))
                 
                 HStack {
                     Button("Change filter") {
@@ -56,6 +75,7 @@ struct ContentView: View {
                     Spacer()
                     
                     Button("Save", action: save)
+                        .disabled(image == nil)
                 }
             }
             .padding([.horizontal, .bottom])
@@ -65,13 +85,20 @@ struct ContentView: View {
                 ImagePicker(image: $inputImage)
             }
             .confirmationDialog("Select a filter", isPresented: $showingFilterSheet) {
-                Button("Crystallize") { setFilter(CIFilter.crystallize()) }
-                Button("Edges") { setFilter(CIFilter.edges()) }
-                Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
-                Button("Pixellate") { setFilter(CIFilter.pixellate()) }
-                Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
-                Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
-                Button("Vignette") { setFilter(CIFilter.vignette()) }
+                Group {
+                    Button("Crystallize") { setFilter(CIFilter.crystallize()) }
+                    Button("Edges") { setFilter(CIFilter.edges()) }
+                    Button("Gaussian Blur") { setFilter(CIFilter.gaussianBlur()) }
+                    Button("Pixellate") { setFilter(CIFilter.pixellate()) }
+                    Button("Sepia Tone") { setFilter(CIFilter.sepiaTone()) }
+                    Button("Unsharp Mask") { setFilter(CIFilter.unsharpMask()) }
+                    Button("Vignette") { setFilter(CIFilter.vignette()) }
+                    
+                    Button("Bloom") { setFilter(CIFilter.bloom()) }
+                    Button("Bokeh Blur") { setFilter(CIFilter.bokehBlur()) }
+                    Button("Twirl Distortion") { setFilter(CIFilter.twirlDistortion()) }
+                }
+                
                 Button("Cancel", role: .cancel) { }
             }
         }
@@ -110,11 +137,11 @@ struct ContentView: View {
         }
         
         if inputKeys.contains(kCIInputRadiusKey) {
-            currentFilter.setValue(filterIntensity * 200, forKey: kCIInputRadiusKey)
+            currentFilter.setValue(filterRadius, forKey: kCIInputRadiusKey)
         }
         
         if inputKeys.contains(kCIInputScaleKey) {
-            currentFilter.setValue(filterIntensity * 10, forKey: kCIInputScaleKey)
+            currentFilter.setValue(filterScale, forKey: kCIInputScaleKey)
         }       
         
         guard let outputImage = currentFilter.outputImage else { return }
@@ -129,6 +156,12 @@ struct ContentView: View {
     func setFilter(_ filter: CIFilter) {
         currentFilter = filter
         loadImage()
+    }
+    
+    func disablingSlider(_ filterKey: String) -> Bool {
+        let inputKeys = currentFilter.inputKeys
+        
+        return !inputKeys.contains(filterKey)
     }
 }
 
