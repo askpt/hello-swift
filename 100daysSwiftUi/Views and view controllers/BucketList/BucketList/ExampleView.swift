@@ -5,7 +5,15 @@
 //  Created by Andre Silva on 23/05/2022.
 //
 
+import MapKit
 import SwiftUI
+import LocalAuthentication
+
+struct Location: Identifiable {
+    let id = UUID()
+    let name: String
+    let coordinate: CLLocationCoordinate2D
+}
 
 enum LoadingState {
     case loading, success, failed
@@ -50,6 +58,14 @@ struct ExampleView: View {
     
     var loadingState = LoadingState.loading
     
+    @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.5, longitude: -0.12), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+    let locations = [
+        Location(name: "Buckingham Palace", coordinate: CLLocationCoordinate2D(latitude: 51.501, longitude: -0.141)),
+        Location(name: "Tower of London", coordinate: CLLocationCoordinate2D(latitude: 51.508, longitude: -0.076))
+    ]
+    
+    @State private var isUnlocked = false
+    
     var body: some View {
         // Example 1
         //        List(values, id: \.self) {
@@ -86,12 +102,82 @@ struct ExampleView: View {
         //        }
         
         // Example 5
-        if loadingState == .loading {
-            LoadingView()
-        } else if loadingState == .success {
-            SuccessView()
-        } else if loadingState == .failed {
-            FailedView()
+        //        if loadingState == .loading {
+        //            LoadingView()
+        //        } else if loadingState == .success {
+        //            SuccessView()
+        //        } else if loadingState == .failed {
+        //            FailedView()
+        //        }
+        
+        // Example 6
+        //        Map(coordinateRegion: $mapRegion)
+        
+        // Example 7
+        //        Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in
+        //            MapMarker(coordinate: location.coordinate)
+        //        }
+        
+        // Example 8
+        //        Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in
+        //            MapAnnotation(coordinate: location.coordinate) {
+        //                VStack{
+        //                    Circle()
+        //                        .stroke(.red, lineWidth: 3)
+        //                        .frame(width: 44, height: 44)
+        //
+        //                    Text(location.name)
+        //                }
+        //                .onTapGesture {
+        //                    print("Tapped on \(location.name)")
+        //                }
+        //
+        //            }
+        //        }
+        
+        // Example 9
+//        NavigationView {
+//            Map(coordinateRegion: $mapRegion, annotationItems: locations) { location in
+//                MapAnnotation(coordinate: location.coordinate) {
+//                    NavigationLink {
+//                        Text(location.name)
+//                    } label: {
+//                        Circle()
+//                            .stroke(.red, lineWidth: 3)
+//                            .frame(width: 44, height: 44)
+//                    }
+//                }
+//            }
+//            .navigationTitle("London Explorer")
+//        }
+        
+        // Example 10
+        VStack {
+            if isUnlocked {
+                Text("Unlocked")
+            } else {
+                Text("Locked")
+            }
+        }
+        .onAppear(perform: authenticate)
+    }
+    
+    func authenticate() {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            let reason = "We need to unlock your data"
+            
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                if success {
+                    isUnlocked = true
+                } else {
+                    
+                }
+            }
+        } else {
+            
         }
     }
     
