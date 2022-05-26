@@ -15,9 +15,9 @@ import LocalAuthentication
 //    let coordinate: CLLocationCoordinate2D
 //}
 
-enum LoadingState {
-    case loading, success, failed
-}
+//enum LoadingState {
+//    case loading, success, failed
+//}
 
 struct LoadingView: View {
     var body: some View {
@@ -56,7 +56,7 @@ struct ExampleView: View {
         User(firstName: "David", lastName: "Lister"),
     ].sorted()
     
-    var loadingState = LoadingState.loading
+//    var loadingState = LoadingState.loading
     
     @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.5, longitude: -0.12), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
 //    let locations = [
