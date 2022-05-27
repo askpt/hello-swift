@@ -16,6 +16,7 @@
 		D96D308F283EC158002649AB /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96D308E283EC158002649AB /* Location.swift */; };
 		D96D3091283EC5A3002649AB /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96D3090283EC5A3002649AB /* EditView.swift */; };
 		D96EED6C2840130500B27E7B /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96EED6B2840130500B27E7B /* Result.swift */; };
+		D9CCE700284168A600DC780C /* ContentView-ModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CCE6FF284168A600DC780C /* ContentView-ModelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		D96D308E283EC158002649AB /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		D96D3090283EC5A3002649AB /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		D96EED6B2840130500B27E7B /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		D9CCE6FF284168A600DC780C /* ContentView-ModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ModelView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				D91E9943283C2691002A575E /* ContentView.swift */,
 				D96EED6B2840130500B27E7B /* Result.swift */,
 				D96D3090283EC5A3002649AB /* EditView.swift */,
+				D9CCE6FF284168A600DC780C /* ContentView-ModelView.swift */,
 				D96D308E283EC158002649AB /* Location.swift */,
 				D91E9945283C2694002A575E /* Assets.xcassets */,
 				D91E9947283C2694002A575E /* Preview Content */,
@@ -157,6 +160,7 @@
 				D96D3091283EC5A3002649AB /* EditView.swift in Sources */,
 				D96D308F283EC158002649AB /* Location.swift in Sources */,
 				D96EED6C2840130500B27E7B /* Result.swift in Sources */,
+				D9CCE700284168A600DC780C /* ContentView-ModelView.swift in Sources */,
 				D91E9942283C2691002A575E /* BucketListApp.swift in Sources */,
 				D91E9950283C26B9002A575E /* ExampleView.swift in Sources */,
 			);

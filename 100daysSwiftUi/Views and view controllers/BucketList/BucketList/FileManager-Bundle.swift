@@ -9,7 +9,7 @@ import Foundation
 
 extension FileManager {
     func decode<T: Decodable>(_ file: String, key: String) -> T {
-        let url = getDocumentsDirectory().appendingPathComponent(key)
+        let url = FileManager.documentsDirectory.appendingPathComponent(key)
         
         guard let data = try? Data(contentsOf: url) else {
             fatalError("Failed to load \(file) from bundle.")
@@ -27,8 +27,7 @@ extension FileManager {
         return loaded
     }
     
-    
-    func getDocumentsDirectory() -> URL {
+    static var documentsDirectory: URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         
         return paths[0]
