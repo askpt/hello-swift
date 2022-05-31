@@ -14,7 +14,7 @@ struct ExpensesTypeView: View {
     
     var body: some View {
         VStack {
-            Text("Personal")
+            Text(type)
             List {
                 ForEach(expenses.items) { item in
                     if item.type == type {
@@ -41,6 +41,9 @@ struct ExpenseView: View {
             Text(expense.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
                 .foregroundColor(expense.amount < 10 ? .green : (expense.amount < 100 ? .yellow : .red))
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(expense.name): \(expense.amount, format: .currency(code: Locale.current.currencyCode ?? "USD"))")
+        .accessibilityHint(expense.type)
     }
 }
 
