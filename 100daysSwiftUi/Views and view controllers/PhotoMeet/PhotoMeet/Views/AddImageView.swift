@@ -13,8 +13,11 @@ struct AddImageView: View {
     @StateObject private var viewModel: ViewModel
     @State private var showingImagePicker = false
     
+    let locationFetcher = LocationFetcher()
+    
     init(onSave: @escaping (PhotoDescription) -> Void) {
         _viewModel = StateObject(wrappedValue: ViewModel(onSave: onSave))
+        self.locationFetcher.start()
     }
     
     var body: some View {
@@ -35,16 +38,24 @@ struct AddImageView: View {
                 showingImagePicker = true
             }
             
-            HStack {
-                TextField("Description", text: $viewModel.description)
+            
+            TextField("Description", text: $viewModel.description)
+                .padding(.vertical)
+            
+            Button(viewModel.location == nil ? "Read Location" : "Refresh Location") {
+                if let location = self.locationFetcher.lastKnownLocation {
+                    print("Your location is \(location)")
+                    viewModel.location = location
+                } else {
+                    print("Your location is unknown")
+                }
             }
-            .padding(.vertical)
             
             Button("Save") {
                 viewModel.save()
                 dismiss()
             }
-            .disabled(viewModel.image == nil)
+            .disabled(viewModel.image == nil || viewModel.description.isEmpty || viewModel.location == nil)
         }
         .padding()
         .onChange(of: viewModel.inputImage) { _ in viewModel.loadImage() }

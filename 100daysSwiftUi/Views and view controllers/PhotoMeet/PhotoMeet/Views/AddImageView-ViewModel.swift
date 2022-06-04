@@ -7,12 +7,15 @@
 
 import Foundation
 import SwiftUI
+import CoreLocation
 
 extension AddImageView {
     @MainActor class ViewModel: ObservableObject {
         @Published var image: Image?
         @Published var description = ""
         @Published var inputImage: UIImage?
+        @Published var location: CLLocationCoordinate2D?
+        
         var onSave: (PhotoDescription) -> Void
         
         init(onSave: @escaping (PhotoDescription) -> Void) {
@@ -32,9 +35,14 @@ extension AddImageView {
                 return
             }
             
+            guard let location = location else {
+                return
+            }
+
+            
             let id = UUID()
             let imageUrl = FileManager.documentsDirectory.appendingPathComponent("\(id.uuidString).png")
-            let newPhotoDescription = PhotoDescription(id: id, description: description, imageUrl: imageUrl)
+            let newPhotoDescription = PhotoDescription(id: id, description: description, imageUrl: imageUrl, longitude: location.longitude, latitude: location.latitude)
 
             if let jpegData = inputImage.jpegData(compressionQuality: 0.8) {
                 do {

@@ -17,6 +17,7 @@
 		D9C289072848ABCA00C051E6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C289062848ABCA00C051E6 /* ImagePicker.swift */; };
 		D9C289092848ADBA00C051E6 /* AddImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C289082848ADBA00C051E6 /* AddImageView.swift */; };
 		D9C2890D2848BCFC00C051E6 /* FileManager-Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C2890C2848BCFC00C051E6 /* FileManager-Bundle.swift */; };
+		D9DB2DA8284BA93E0094CDEE /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9DB2DA7284BA93E0094CDEE /* LocationFetcher.swift */; };
 		D9E302A32849FF1A000B1AE0 /* PhotoDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E302A22849FF1A000B1AE0 /* PhotoDescription.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		D9C289062848ABCA00C051E6 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		D9C289082848ADBA00C051E6 /* AddImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageView.swift; sourceTree = "<group>"; };
 		D9C2890C2848BCFC00C051E6 /* FileManager-Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager-Bundle.swift"; sourceTree = "<group>"; };
+		D9DB2DA7284BA93E0094CDEE /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 		D9E302A22849FF1A000B1AE0 /* PhotoDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDescription.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +102,7 @@
 			children = (
 				D9C289062848ABCA00C051E6 /* ImagePicker.swift */,
 				D9C2890C2848BCFC00C051E6 /* FileManager-Bundle.swift */,
+				D9DB2DA7284BA93E0094CDEE /* LocationFetcher.swift */,
 			);
 			path = OSServices;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 			files = (
 				D9C289092848ADBA00C051E6 /* AddImageView.swift in Sources */,
 				D9A11F26284A706500957FE1 /* DetailView.swift in Sources */,
+				D9DB2DA8284BA93E0094CDEE /* LocationFetcher.swift in Sources */,
 				D9C2890D2848BCFC00C051E6 /* FileManager-Bundle.swift in Sources */,
 				D9C289072848ABCA00C051E6 /* ImagePicker.swift in Sources */,
 				D9C288F92848A9BA00C051E6 /* ContentView.swift in Sources */,
@@ -324,6 +328,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoMeet/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Get information about the current location";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Read images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -356,6 +361,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoMeet/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Get information about the current location";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Read images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
