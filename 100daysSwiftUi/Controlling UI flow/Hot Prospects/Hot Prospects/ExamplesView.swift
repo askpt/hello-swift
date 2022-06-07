@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UserNotifications
+import SamplePackage
 
 @MainActor class User: ObservableObject {
     @Published var name = "Taylor Swift"
@@ -50,6 +52,9 @@ struct ExamplesView: View {
     @StateObject private var updater = DelayedUpdater()
     
     @State private var output = ""
+    @State private var backgroundColor = Color.red
+    
+    let possibleNumbers = Array(1...60)
     
     var body: some View {
         // Example 1
@@ -92,14 +97,107 @@ struct ExamplesView: View {
         //            }
         
         // Example 6
-        Image("example")
-            .interpolation(.none)
-            .resizable()
-            .scaledToFit()
-            .frame(maxHeight: .infinity)
-            .background(.black)
-            .ignoresSafeArea()
+        //        Image("example")
+        //            .interpolation(.none)
+        //            .resizable()
+        //            .scaledToFit()
+        //            .frame(maxHeight: .infinity)
+        //            .background(.black)
+        //            .ignoresSafeArea()
+        
+        // Example 7
+        //        VStack {
+        //            Text("Hello, World!")
+        //                .padding()
+        //                .background(backgroundColor)
+        //
+        //            Text("Change Color")
+        //                .padding()
+        //                .contextMenu {
+        //                    Button(role: .destructive) {
+        //                        backgroundColor = .red
+        //                    } label: {
+        //                        Label("Red", systemImage: "checkmark.circle.fill")
+        //                    }
+        //
+        //                    Button("Green") {
+        //                        backgroundColor = .green
+        //                    }
+        //
+        //                    Button("Blue") {
+        //                        backgroundColor = .blue
+        //                    }
+        //                }
+        //        }
+        
+        // Example 8
+        //        List {
+        //            Text("Taylor Swift")
+        //                .swipeActions {
+        //                    Button {
+        //                        print("Hi")
+        //                    } label: {
+        //                        Label("Send message", systemImage: "message")
+        //                    }
+        //                }
+        //        }
+        
+        // Example 9
+        //        List {
+        //            Text("Taylor Swift")
+        //                .swipeActions {
+        //                    Button(role: .destructive) {
+        //                        print("Hi")
+        //                    } label: {
+        //                        Label("Delete", systemImage: "minus.circle")
+        //                    }
+        //                }
+        //                .swipeActions(edge: .leading) {
+        //                    Button {
+        //                        print("Hi")
+        //                    } label: {
+        //                        Label("Pin", systemImage: "pin")
+        //                    }
+        //                    .tint(.orange)
+        //                }
+        //        }
+        
+        // Example 10
+        //        VStack {
+        //            Button("Request Permission") {
+        //                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+        //                    if success {
+        //                        print("All set!")
+        //                    } else if let error = error {
+        //                        print(error.localizedDescription)
+        //                    }
+        //                }
+        //            }
+        //
+        //            Button("Schedule Notifications") {
+        //                let content = UNMutableNotificationContent()
+        //                content.title = "Feed the dogs"
+        //                content.subtitle = "They look hungry"
+        //                content.sound = UNNotificationSound.default
+        //
+        //                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        //
+        //                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        //
+        //                UNUserNotificationCenter.current().add(request)
+        //            }
+        
+        // Example 11
+        Text(results)
     }
+    
+    var results: String {
+        let selected = possibleNumbers.random(7).sorted()
+        let strings = selected.map(String.init)
+        
+        return strings.joined(separator: ", ")
+    }
+    
     
     func fetchReadings() async {
         let fetchTask = Task { () -> String in
@@ -126,6 +224,7 @@ struct ExamplesView: View {
         
     }
 }
+
 
 struct ExamplesView_Previews: PreviewProvider {
     static var previews: some View {
