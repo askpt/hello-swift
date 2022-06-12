@@ -16,6 +16,7 @@ struct ProspectsView: View {
     
     @EnvironmentObject var prospects: Prospects
     @State private var isShowingScanner = false
+    @State private var showingConfirmationDialog = false
     
     let filter: FilterType
     
@@ -23,11 +24,16 @@ struct ProspectsView: View {
         NavigationView {
             List {
                 ForEach(filteredProspects) { prospect in
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.emailAddress)
-                            .foregroundColor(.secondary)
+                    HStack {
+                        if filter == .none {
+                            Image(systemName: prospect.isContacted ? "person.fill.checkmark" : "person.fill.xmark")
+                        }
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundColor(.secondary)
+                        }
                     }
                     .swipeActions {
                         if prospect.isContacted {
@@ -57,14 +63,31 @@ struct ProspectsView: View {
             }
             .navigationTitle(title)
             .toolbar {
-                Button {
-                    isShowingScanner = true
-                } label: {
-                    Label("Scan", systemImage: "qrcode.viewfinder")
+                HStack {
+                    Button {
+                        showingConfirmationDialog = true
+                    } label: {
+                        Label("Sort", systemImage: "arrow.up.arrow.down")
+                    }
+                    Button {
+                        isShowingScanner = true
+                    } label: {
+                        Label("Scan", systemImage: "qrcode.viewfinder")
+                    }
                 }
             }
             .sheet(isPresented: $isShowingScanner) {
                 CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan)
+            }
+            .confirmationDialog("Select Sorting", isPresented: $showingConfirmationDialog) {
+                Button("Name") {
+                    self.prospects.sort(by: .name)
+                }
+                Button("Recent") {
+                    self.prospects.sort(by: .mostRecent)
+                }
+                
+                Button("Cancel", role: .cancel) { }
             }
         }
     }
