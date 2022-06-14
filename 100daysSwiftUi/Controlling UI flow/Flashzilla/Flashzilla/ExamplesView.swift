@@ -8,6 +8,14 @@
 import CoreHaptics
 import SwiftUI
 
+//func withOptionalAnimation<Result>(_ animation: Animation? = .default, _ body: () throws -> Result) rethrows -> Result {
+//    if UIAccessibility.isReduceMotionEnabled {
+//        return try body()
+//    } else {
+//        return try withAnimation(animation, body)
+//    }
+//}
+
 struct ExamplesView: View {
     @State private var currentAmount = Angle.zero
     @State private var finalAmount = Angle.zero
@@ -16,6 +24,17 @@ struct ExamplesView: View {
     @State private var isDragging = false
     
     @State private var engine: CHHapticEngine?
+    
+    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
+    @State private var counter = 0
+    
+    @Environment(\.scenePhase) var scenePhase
+    
+    @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) var reduceTransparency
+    
+    @State private var scale = 1.0
     
     var body: some View {
         // Example 1
@@ -161,15 +180,82 @@ struct ExamplesView: View {
         //        }
         
         // Example 12
-        VStack {
-            Text("Hello")
-            Spacer().frame(height: 100)
-            Text("World")
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            print("VStack tapped!")
-        }
+        //        VStack {
+        //            Text("Hello")
+        //            Spacer().frame(height: 100)
+        //            Text("World")
+        //        }
+        //        .contentShape(Rectangle())
+        //        .onTapGesture {
+        //            print("VStack tapped!")
+        //        }
+        
+        // Example 13
+        //        Text("aa")
+        //            .onReceive(timer) { time in
+        //                if counter == 5 {
+        //                    timer.upstream.connect().cancel()
+        //                } else {
+        //                    print("Time is now \(time)")
+        //                }
+        //
+        //                counter += 1
+        //            }
+        
+        // Example 14
+        //        Text("a")
+        //            .padding()
+        //            .onChange(of: scenePhase) { newPhase in
+        //                if newPhase == .active {
+        //                    print("Active")
+        //                } else if newPhase == .inactive {
+        //                    print("Inactive")
+        //                } else if newPhase == .background {
+        //                    print("Background")
+        //                }
+        //            }
+        
+        // Example 15
+        //        HStack {
+        //            if differentiateWithoutColor {
+        //                Image(systemName: "checkmark.circle")
+        //            }
+        //            Text("Success")
+        //        }
+        //        .padding()
+        //        .background(differentiateWithoutColor ? .black : .green)
+        //        .foregroundColor(.white)
+        //        .clipShape(Capsule())
+        
+        // Example 16
+        //        Text("Hello")
+        //            .scaleEffect(scale)
+        //            .onTapGesture {
+        //                if reduceMotion {
+        //                    scale *= 1.5
+        //                } else {
+        //                    withAnimation {
+        //                        scale *= 1.5
+        //                    }
+        //                }
+        //            }
+        
+        // Example 17
+        //        Text("Hello")
+        //            .scaleEffect(scale)
+        //            .onTapGesture {
+        //                withOptionalAnimation {
+        //                    scale *= 1.5
+        //                }
+        //            }
+        
+        // Example 18
+        Text("Hello")
+            .scaleEffect(scale)
+            .padding()
+            .background(reduceTransparency ? .black : .black.opacity(0.5))
+            .foregroundColor(.white)
+            .clipShape(Capsule())
     }
     
     func simpleSuccess() {
