@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D92F1796285A6DD90032FCC6 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92F1795285A6DD90032FCC6 /* Card.swift */; };
 		D92F1798285A6E4D0032FCC6 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92F1797285A6E4D0032FCC6 /* CardView.swift */; };
+		D99DC451285C6A250092DD5A /* EditCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D99DC450285C6A250092DD5A /* EditCardsView.swift */; };
 		D9CF79912857CCFD007B6296 /* FlashzillaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CF79902857CCFD007B6296 /* FlashzillaApp.swift */; };
 		D9CF79932857CCFD007B6296 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CF79922857CCFD007B6296 /* ContentView.swift */; };
 		D9CF79952857CD00007B6296 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9CF79942857CD00007B6296 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		D92F1795285A6DD90032FCC6 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		D92F1797285A6E4D0032FCC6 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		D99DC450285C6A250092DD5A /* EditCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardsView.swift; sourceTree = "<group>"; };
 		D9CF798D2857CCFD007B6296 /* Flashzilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashzilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9CF79902857CCFD007B6296 /* FlashzillaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashzillaApp.swift; sourceTree = "<group>"; };
 		D9CF79922857CCFD007B6296 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				D9CF79962857CD00007B6296 /* Preview Content */,
 				D9CF799E2857CD24007B6296 /* ExamplesView.swift */,
 				D92F1797285A6E4D0032FCC6 /* CardView.swift */,
+				D99DC450285C6A250092DD5A /* EditCardsView.swift */,
 			);
 			path = Flashzilla;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D99DC451285C6A250092DD5A /* EditCardsView.swift in Sources */,
 				D9CF799F2857CD24007B6296 /* ExamplesView.swift in Sources */,
 				D9CF79932857CCFD007B6296 /* ContentView.swift in Sources */,
 				D9CF79912857CCFD007B6296 /* FlashzillaApp.swift in Sources */,
