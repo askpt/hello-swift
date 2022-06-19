@@ -7,9 +7,30 @@
 
 import SwiftUI
 
+struct Fill: ViewModifier {
+    @State public var width: Double
+    private var colour: Color
+    
+    init(width: Double) {
+        self.width = width
+        
+        if width > 0 {
+            colour = .green
+        } else if width < 0 {
+            colour = .red
+        } else {
+            colour = .white
+        }
+    }
+    
+    func body(content: Content) -> some View {
+        content.foregroundColor(colour)
+    }
+}
+
 struct CardView: View {
     let card: Card
-    var removal: (() -> Void)? = nil
+    var removal: ((Bool) -> Void)? = nil
     
     @Environment(\.accessibilityDifferentiateWithoutColor) var differentiateWithoutColor
     @Environment(\.accessibilityVoiceOverEnabled) var voiceOverEnabled
@@ -30,7 +51,8 @@ struct CardView: View {
                     differentiateWithoutColor
                     ? nil
                     : RoundedRectangle(cornerRadius: 25, style: .continuous)
-                        .fill(offset.width > 0 ? .green : .red)
+//                        .fill(offset.width > 0 ? .green : .red)
+                        .modifier(Fill(width: offset.width))
                 )
                 .shadow(radius: 10)
             
@@ -72,7 +94,7 @@ struct CardView: View {
                         } else {
                             feedback.notificationOccurred(.error)
                         }
-                        removal?()
+                        removal?(self.offset.width > 0)
                     } else {
                         offset = .zero
                     }

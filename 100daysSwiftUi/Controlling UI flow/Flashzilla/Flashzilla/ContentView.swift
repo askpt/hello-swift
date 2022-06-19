@@ -45,9 +45,9 @@ struct ContentView: View {
                 
                 ZStack {
                     ForEach(0..<cards.count, id: \.self) { index in
-                        CardView(card: cards[index]) {
+                        CardView(card: cards[index]) { (answer) in
                             withAnimation {
-                                removeCards(at: index)
+                                removeCards(at: index, isSuccess: answer)
                             }
                         }
                         .stacked(at: index, in: cards.count)
@@ -91,7 +91,7 @@ struct ContentView: View {
                     HStack {
                         Button {
                             withAnimation {
-                                removeCards(at: cards.count - 1)
+                                removeCards(at: cards.count - 1, isSuccess: false)
                             }
                         } label: {
                             Image(systemName: "xmark.circle")
@@ -105,7 +105,7 @@ struct ContentView: View {
                         
                         Button {
                             withAnimation {
-                                removeCards(at: cards.count - 1)
+                                removeCards(at: cards.count - 1, isSuccess: true)
                             }
                         } label: {
                             Image(systemName: "checkmark.circle")
@@ -141,10 +141,16 @@ struct ContentView: View {
         .onAppear(perform: resetCards)
     }
     
-    func removeCards(at index: Int) {
+    func removeCards(at index: Int, isSuccess: Bool) {
         guard index >= 0 else { return }
         
-        cards.remove(at: index)
+        let card = cards.remove(at: index)
+        
+        if !isSuccess {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.cards.insert(card, at: 0)
+            }
+        }
         
         if cards.isEmpty {
             isActive = false
