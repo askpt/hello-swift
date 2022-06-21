@@ -17,7 +17,41 @@ extension VerticalAlignment {
     static let midAcountAndName = VerticalAlignment(MidAccountAndName.self)
 }
 
+struct OuterView: View {
+    var body: some View {
+        VStack {
+            Text("Top")
+            InnerView()
+                .background(.green)
+            Text("Bottom")
+        }
+    }
+}
+
+struct InnerView: View {
+    var body: some View {
+        HStack {
+            Text("Left")
+            
+            GeometryReader { geo in
+                Text("Center")
+                    .background(.blue)
+                    .onTapGesture {
+                        print("Global center: \(geo.frame(in: .global).midX) x \(geo.frame(in: .global).midY)")
+                        print("Local center: \(geo.frame(in: .local).midX) x \(geo.frame(in: .local).midY)")
+                        print("Custom center: \(geo.frame(in: .named("Custom")).midX) x \(geo.frame(in: .named("Custom")).midY)")
+                    }
+            }
+            .background(.orange)
+            
+            Text("Right")
+        }
+    }
+}
+
 struct ContentView: View {
+    let colors: [Color] = [.red, .green, .blue, .orange, .pink, .purple, .yellow]
+    
     var body: some View {
         // Example 1
         //        Text("Hello, world!")
@@ -66,22 +100,88 @@ struct ContentView: View {
         //        .background(.blue)
         
         // Example 6
-        HStack (alignment: .midAcountAndName) {
-            VStack {
-                Text("@twostraws")
-                    .alignmentGuide(.midAcountAndName) { d in d[VerticalAlignment.center]}
-                Image("paul-hudson")
-                    .resizable()
-                    .frame(width: 64, height: 64)
-            }
-            
-            VStack {
-                Text("Full name:")
-                Text("PAUL HUDSON")
-                    .alignmentGuide(.midAcountAndName) { d in d[VerticalAlignment.center]}
-                    .font(.largeTitle)
+        //        HStack (alignment: .midAcountAndName) {
+        //            VStack {
+        //                Text("@twostraws")
+        //                    .alignmentGuide(.midAcountAndName) { d in d[VerticalAlignment.center]}
+        //                Image("paul-hudson")
+        //                    .resizable()
+        //                    .frame(width: 64, height: 64)
+        //            }
+        //
+        //            VStack {
+        //                Text("Full name:")
+        //                Text("PAUL HUDSON")
+        //                    .alignmentGuide(.midAcountAndName) { d in d[VerticalAlignment.center]}
+        //                    .font(.largeTitle)
+        //            }
+        //        }
+        
+        // Example 7
+        //        Text("Hello world!")
+        //            .background(.red)
+        //            .position(x: 100, y: 100)
+        //            .background(.blue)
+        
+        // Example 8
+        //        Text("Hello world!")
+        //            .offset(x: 100, y: 100)
+        //            .background(.blue)
+        
+        // Example 9
+        //        VStack {
+        //            GeometryReader { geo in
+        //                Text("Hello, world!")
+        //                    .frame(width: geo.size.width * 0.9)
+        //                    .background(.red)
+        //            }
+        //            .background(.green)
+        //
+        //            Text("More Text")
+        //            Text("More Text")
+        //            Text("More Text")
+        //                .background(.blue)
+        //        }
+        
+        // Example 10
+        //        OuterView()
+        //            .background(.red)
+        //            .coordinateSpace(name: "Custom")
+        
+        // Example 11
+//        GeometryReader { fullView in
+//            ScrollView {
+//                ForEach(0..<50) { index in
+//                    GeometryReader { geo in
+//                        Text("Row #\(index)")
+//                            .font(.title)
+//                            .frame(maxWidth: .infinity)
+//                            .background(colors[index % 7])
+//                            .rotation3DEffect(.degrees(geo.frame(in: .global).midY - fullView.size.height / 2) / 5, axis: (x: 0, y: 1, z: 0))
+//                    }
+//                    .frame(height: 40)
+//                }
+//            }
+//        }
+        
+        // Example 12
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 0) {
+                ForEach(1..<20) { num in
+                    GeometryReader { geo in
+                        Text("Number \(num)")
+                            .font(.largeTitle)
+                            .padding()
+                            .background(.red)
+                            .rotation3DEffect(.degrees(-geo.frame(in: .global).midX) / 8, axis: (x: 8, y: 1, z: 0))
+                            .frame(width: 200, height: 200)
+                    }
+                    .frame(width: 200, height: 200)
+                    
+                }
             }
         }
+        
     }
 }
 
