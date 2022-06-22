@@ -165,19 +165,38 @@ struct ContentView: View {
 //        }
         
         // Example 12
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
-                ForEach(1..<20) { num in
+//        ScrollView(.horizontal, showsIndicators: false) {
+//            HStack(spacing: 0) {
+//                ForEach(1..<20) { num in
+//                    GeometryReader { geo in
+//                        Text("Number \(num)")
+//                            .font(.largeTitle)
+//                            .padding()
+//                            .background(.red)
+//                            .rotation3DEffect(.degrees(-geo.frame(in: .global).midX) / 8, axis: (x: 8, y: 1, z: 0))
+//                            .frame(width: 200, height: 200)
+//                    }
+//                    .frame(width: 200, height: 200)
+//
+//                }
+//            }
+//        }
+        
+        // Challenge
+        GeometryReader { fullView in
+            ScrollView(.vertical) {
+                ForEach(0..<50) { index in
                     GeometryReader { geo in
-                        Text("Number \(num)")
-                            .font(.largeTitle)
-                            .padding()
-                            .background(.red)
-                            .rotation3DEffect(.degrees(-geo.frame(in: .global).midX) / 8, axis: (x: 8, y: 1, z: 0))
-                            .frame(width: 200, height: 200)
+                        Text("Row #\(index)")
+                            .font(.title)
+//                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: abs(geo.frame(in: .global).origin.y / 2) > 125 ? abs(geo.frame(in: .global).origin.y / 2) : 125)
+//                            .background(colors[index % 7])
+                            .background(Color(hue: geo.frame(in: .global).origin.y / 1000, saturation: 1, brightness: 1))
+                            .opacity(abs(geo.frame(in: .global).origin.y) < 200 ? (abs(geo.frame(in: .global).origin.y) / 200.0) : 1)
+                            .rotation3DEffect(.degrees(geo.frame(in: .global).minY - fullView.size.height / 2), axis: (x: 0, y: 1, z: 0))
                     }
-                    .frame(width: 200, height: 200)
-                    
+                    .frame(height: 40)
                 }
             }
         }
