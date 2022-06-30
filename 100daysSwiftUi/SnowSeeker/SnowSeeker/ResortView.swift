@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+struct ImageOverlay: View {
+    var author: String
+    var body: some View {
+        ZStack {
+            Text("Credit: \(author)")
+                .font(.callout)
+                .padding(5)
+                .foregroundColor(.white)
+        }.background(Color.gray)
+            .opacity(0.5)
+            .padding(5)
+    }
+}
+
 struct ResortView: View {
     let resort: Resort
     
@@ -24,7 +38,8 @@ struct ResortView: View {
                 Image(decorative: resort.id)
                     .resizable()
                     .scaledToFit()
-                
+                    .overlay(ImageOverlay(author: resort.imageCredit), alignment: .bottomTrailing)
+
                 HStack {
                     if sizeClass == .compact && typeSize > .large {
                         VStack(spacing: 10) { ResortDetailsView(resort: resort) }

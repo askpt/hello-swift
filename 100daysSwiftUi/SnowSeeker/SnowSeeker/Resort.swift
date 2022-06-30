@@ -27,3 +27,7 @@ struct Resort: Codable, Identifiable {
     static let allResorts: [Resort] = Bundle.main.decode("resorts.json")
     static let example = allResorts[0]
 }
+
+enum ResortSortOrder {
+case defaultOrder, alphabeticalAscending, alphabeticalDescending, countryAscending, countryDescending
+}

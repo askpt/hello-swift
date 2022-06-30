@@ -19,13 +19,14 @@ extension View {
 
 struct ContentView: View {
     @State private var searchText = ""
+    @State private var sortOrder = ResortSortOrder.defaultOrder
     @StateObject var favourites = Favourites()
     
     let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
     var body: some View {
         NavigationView {
-            List(filteredResorts) { resort in
+            List(filteredAndOrderedResorts) { resort in
                 NavigationLink {
                     ResortView(resort: resort)
                 } label: {
@@ -60,6 +61,53 @@ struct ContentView: View {
             }
             .searchable(text: $searchText, prompt: "Search for a resort")
             .navigationTitle("Resorts")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Menu {
+                        Button(action: {
+                            sortOrder = .defaultOrder
+                        }) {
+                            if sortOrder == .defaultOrder {
+                                Image(systemName: "checkmark")
+                            }
+                            Text("Default Order")
+                        }
+                        
+                        Button(action: {
+                            if sortOrder == .alphabeticalAscending {
+                                sortOrder = .alphabeticalDescending
+                            } else {
+                                sortOrder = .alphabeticalAscending
+                            }
+                        }) {
+                            if sortOrder == .alphabeticalAscending {
+                                Image(systemName: "arrow.up")
+                            } else if sortOrder == .alphabeticalDescending {
+                                Image(systemName: "arrow.down")
+                            }
+                            Text("Alphabetical")
+                        }
+                        
+                        Button(action: {
+                            if sortOrder == .countryAscending {
+                                sortOrder = .countryDescending
+                            } else {
+                                sortOrder = .countryAscending
+                            }
+                        }) {
+                            if sortOrder == .countryAscending {
+                                Image(systemName: "arrow.up")
+                            } else if sortOrder == .countryDescending {
+                                Image(systemName: "arrow.down")
+                            }
+                            Text("Country")
+                        }
+                    }
+                label: {
+                    Image(systemName: "arrow.up.arrow.down")
+                }
+                }
+            }
             
             WelcomeView()
         }
@@ -72,6 +120,29 @@ struct ContentView: View {
             return resorts
         } else {
             return resorts.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
+    
+    var filteredAndOrderedResorts: [Resort] {
+        switch sortOrder {
+        case .defaultOrder:
+            return filteredResorts
+        case .alphabeticalAscending:
+            return filteredResorts.sorted {
+                $0.name < $1.name
+            }
+        case .countryAscending:
+            return filteredResorts.sorted {
+                $0.country < $1.country
+            }
+        case .alphabeticalDescending:
+            return filteredResorts.sorted {
+                $0.name > $1.name
+            }
+        case .countryDescending:
+            return filteredResorts.sorted {
+                $0.country > $1.country
+            }
         }
     }
 }
